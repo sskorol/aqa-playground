@@ -51,7 +51,7 @@ services:
       context: ./packages/frontend
       args:
         VITE_REACT_APP_BE_URL: "/api"
-        VITE_REACT_APP_STRIPE_PUB_KEY: "pk_test_51NsAh1EIVAvYFgyjyHLtemtl3H2ldifCXGLgW08LridIJI71sAgsUsI7nYfN1KTe9fzu1jEDXlBmYPozYS4UaWUb00cWfWP5Ke"
+        VITE_REACT_APP_STRIPE_PUB_KEY: ""
     restart: always
     container_name: frontend
     image: sskorol/aqa-fe:0.0.1

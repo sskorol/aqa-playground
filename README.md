@@ -1,7 +1,10 @@
 ## AQA Playground
 
-The AQA Playground is a comprehensive testbed designed primarily for passionate SDETs to practice their skills in a real-world scenario.
-Integrating PostgreSQL, NestJS / Swagger / JWT Auth, React, Docker, and Stripe, this project simulates a full-fledged application ecosystem, providing a hands-on experience for front-end and back-end testing activities.
+:mortar_board: The AQA Playground is a comprehensive testbed designed primarily for passionate SDETs to practice their skills in a real-world scenario.
+
+:fire: Integrating PostgreSQL, NestJS / Swagger / JWT Auth, React, Docker, and Stripe, this project simulates a full-fledged application ecosystem, providing a hands-on experience for frontend and backend testing activities. 
+
+<video src="https://github.com/sskorol/aqa-playground/assets/6638780/887f3b92-4558-4ffe-a35b-127037bfb73a"></video>
 
 ### Table of Contents
 1. [Installation](#installation)
@@ -10,6 +13,8 @@ Integrating PostgreSQL, NestJS / Swagger / JWT Auth, React, Docker, and Stripe, 
     - [Stripe Payments](#stripe-payments)
     - [Source Code](#source-code)
     - [Environment Variables](#environment-variables)
+      - [Frontend Config](#frontend-config)
+      - [Backend Config](#backend-config)
     - [Database](#database)
 2. [Docker](#docker-1)
     - [Partial mode](#partial-mode)
@@ -19,6 +24,8 @@ Integrating PostgreSQL, NestJS / Swagger / JWT Auth, React, Docker, and Stripe, 
     - [Prod Mode](#prod-mode)
     - [Operating](#operating)
 4. [Tests](#tests)
+5. [Credits](#credits)
+6. [ToDo or Dreams](#todo-or-dreams)
 
 ### Installation
 
@@ -26,11 +33,13 @@ Use the following instructions to set everything up on your local machine.
 
 #### NodeJS
 
-Ensure node 16 and npm 7+ is installed:
+Ensure [node-16](https://nodejs.org/en/blog/release/v16.20.2) and npm 8+ are installed:
 ```shell
 node --version  # v16.20.2
 npm --version   # 8.19.4
 ```
+
+[**Go top**](#table-of-contents) :point_up:
 
 #### Docker
 
@@ -39,11 +48,15 @@ Follow the official guide to install:
 - [Docker](https://docs.docker.com/engine/install/)
 - [Compose](https://docs.docker.com/compose/install/)
 
+[**Go top**](#table-of-contents) :point_up:
+
 #### Stripe Payments
 
 - Sign up to [Stripe](https://dashboard.stripe.com/register) to access their API.
 - **Important**: don't activate live payments! Testing mode is enabled by default. Just leave it as is. 
 - Go to **Developers** tab -> API keys -> copy **Publishable** and **Secret** keys. The former is required for frontend, the latter is for backend.
+
+[**Go top**](#table-of-contents) :point_up:
 
 #### Source Code
 
@@ -57,20 +70,26 @@ Install dependencies:
 npm ci
 ```
 
+[**Go top**](#table-of-contents) :point_up:
+
 #### Environment Variables
 
 The recommended way of setting up sensitive data for development is using your IDE's run/debug configuration profiles.
 However, for production builds you'll likely use CLI or Docker.
-That's where you need to adjust `.env.production` file both in frontend and backend directories.
+That's where you need to adjust `.env.production` file for such scenarios (see [Environment Variables](#environment-variables)).
 Below you'll find sample values that could be also used in IDE.
 
-**Backend config**:
+[**Go top**](#table-of-contents) :point_up:
+
+##### Backend Config
+
 ```shell
 cd packages/backend && nano .env.production
 ```
 
-**.env.production**:
 ```shell
+# .env.production
+
 # Postgres
 POSTGRES_USER=admin
 POSTGRES_PASSWORD=admin
@@ -103,9 +122,12 @@ That differs from the direct DB access from the host, where you have to use an *
 Also note about dependencies: if you change ports or service names, don't forget to update the relevant info within FE/BE env vars
 and Vite/Nginx configs (currently they use a hardcoded BE URL).
 
-Regarding Stripe integration: just don't mix up the keys. Secret is always on the BE, publishable key is on FE-side.  
+Regarding Stripe integration: just don't mix up the keys. Secret is always on the BE, publishable key is on FE-side.
 
-**Frontend config**:
+[**Go top**](#table-of-contents) :point_up:
+
+##### Frontend Config
+
 ```shell
 VITE_REACT_APP_BE_URL=/api
 VITE_REACT_APP_STRIPE_PUB_KEY=YOUR_PUBLICHABLE_STRIPE_KEY
@@ -115,7 +137,7 @@ Note that frontend production environment setup slightly differs from backend.
 By default, you can't pass environment variables to React app in runtime unless you're running a dev server.
 Build process produces static assets that contain hardcoded values picked up from the CLI.
 There are several hacks that allows you to workaround this. But it doesn't worth doing it for just 2 env vars.
-So you should either set them up in IDE or pass to Docker image via `build.sh` script.
+So you should either set them up in IDE or pass to Docker image via CLI / Compose.
 
 Also note that frontend uses [Vite](https://vitejs.dev/) which allows you to spawn the dev server in milliseconds.
 But we have to pay for it by following their conventions. Specifically, env vars must have `VITE_` prefix.
@@ -126,9 +148,14 @@ It's also worth mentioning that `VITE_REACT_APP_BE_URL` value is different for d
 In dev mode you have to provide a full BE URL like `http://localhost:9090`. In prod mode, as we produce static assets,
 reverse proxy is used on Nginx-level. It maps BE URL in Docker to `/api`. So env variable should refer to a short path instead.
 
+[**Go top**](#table-of-contents) :point_up:
+
 #### Database
 
-DB is persisted locally via Docker volumes. Create 
+DB is persisted locally via Docker volumes. So when you start the images listed in docker-compose configs (see [Partial Mode](#partial-mode)),
+you'll see a new `./data` folder within backend root.
+
+[**Go top**](#table-of-contents) :point_up:
 
 ### Docker
 
@@ -136,7 +163,9 @@ There are 2 options:
 - run the app in the dev mode but Postgres and PGAdmin in Docker
 - run the entire app in prod mode in Docker
 
-#### Partial mode
+[**Go top**](#table-of-contents) :point_up:
+
+#### Partial Mode
 
 The former option simplifies DB configuration stuff, but still require the initial setup to be done for spawning dev environment on your host OS.
 Run the following command when your environment variables are ready:
@@ -146,10 +175,12 @@ docker compose -f docker-compose.dev.yml up -d
 
 It deploys Postgres with PGAdmin, so that you can connect to the database from within BE or GUI.
 
-#### Full deployment
+[**Go top**](#table-of-contents) :point_up:
+
+#### Full Deployment
 
 To run the entire app in Docker, you have to build FE and BE first. But before doing that, you have to adjust `docker-compose.prod.yml`
-with your Stripe publishable key (see notes about FE anv variables and deployment specifics).
+with your Stripe publishable key (see notes about [FE env variables](#environment-variables) and deployment specifics).
 
 ```yaml
   frontend:
@@ -179,9 +210,13 @@ To run the entire stack, use the following command:
 docker compose -f docker-compose.prod.yml up -d
 ```
 
+[**Go top**](#table-of-contents) :point_up:
+
 ### Running
 
 Depending on the previous choice, you'd either run DB in Docker and BE/FE in IDE, or everything in Docker.
+
+[**Go top**](#table-of-contents) :point_up:
 
 #### Dev Mode
 
@@ -197,12 +232,16 @@ It's not recommended to activate it on prod, but as it's a test app, this flag g
 
 At this point, you should be able to run FE and BE locally with DB in Docker.
 
+[**Go top**](#table-of-contents) :point_up:
+
 #### Prod Mode
 
 To deploy everything in containers, just run the following command:
 ```shell
 docker compose -f docker-compose.prod.yml up -d
 ```
+
+[**Go top**](#table-of-contents) :point_up:
 
 #### Operating
 
@@ -217,9 +256,35 @@ docker compose -f docker-compose.prod.yml up -d
 
 Note that the flow would be the same in case of the local and containerized deployment.
 
+[**Go top**](#table-of-contents) :point_up:
+
 ### Tests
 
-There are no tests. But that's the point, right. ;) 
+There are no tests. But that's the point, right? :smirk:
 
 I'd also recommend you to perform an exercise by adding custom attributes to elements you'd interact with on FE.
-That would be a good practice to know your FE better.
+That would be a good practice to know your FE better. :mortar_board:
+
+[**Go top**](#table-of-contents) :point_up:
+
+### Credits
+
+Inspired by @jayamaljayamaha who is the author of the original implementation:
+- [backend](https://github.com/jayamaljayamaha/stripe-integration-back-end)
+- [frontend](https://github.com/jayamaljayamaha/stripe-integration-front-end)
+
+[**Go top**](#table-of-contents) :point_up:
+
+### ToDo or Dreams
+
+- [ ] Add API and UI tests using different stacks
+- [ ] Revise and optimize styles
+- [ ] Decouple and optimize FE components
+- [ ] Extend Checkout logic
+- [ ] Add Product details component
+- [ ] Add Product and User management screens
+- [ ] Add file upload support for images
+- [ ] Revise DTOs, possibly add DAOs
+- [ ] Add dynamic environment variables support to FE
+
+[**Go top**](#table-of-contents) :point_up:
