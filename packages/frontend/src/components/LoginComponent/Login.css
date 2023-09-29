@@ -1,0 +1,29 @@
+.login-container-inner {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-paper {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* this line centers children horizontally */
+    justify-content: center; /* this line centers children vertically */
+    max-width: 300px;  /* optional, you can set a fixed width */
+    width: 100%;
+}
+
+.login-title {
+    margin-bottom: 20px;
+}
+
+.login-input {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.login-button {
+    margin-top: 20px;
+}

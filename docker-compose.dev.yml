@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:latest
+    restart: always
+    ports:
+      - "5435:5432"
+    logging:
+      options:
+        max-size: 10m
+        max-file: "3"
+    volumes:
+      - ./packages/backend/data/postgres:/var/lib/postgresql/data
+    env_file:
+      - ./packages/backend/.env.production
+    networks:
+      - aqa
+
+  pgadmin:
+    restart: always
+    links:
+      - postgres:postgres
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    ports:
+      - "8080:80"
+    volumes:
+      - ./packages/backend/data/pgadmin:/var/lib/pgadmin
+    env_file:
+      - ./packages/backend/.env.production
+    networks:
+      - aqa
+
+networks:
+  aqa:
+    driver: bridge

@@ -1,0 +1,31 @@
+.new-product-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-product-paper {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 230px;
+    width: 100%;
+}
+
+.new-product-title {
+    margin-bottom: 20px;
+}
+
+.new-product-input {
+    margin: 10px 0;
+    width: 100%;
+}
+
+.new-product-button {
+    margin-top: 20px;
+    width: 100%;
+}
