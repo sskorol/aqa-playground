@@ -6,12 +6,9 @@ import { Message } from '../../common/message';
 import { AuthService } from '../auth.service';
 import { JwtPayload } from '../dto/jwt.payload.dto';
 import { UserDto } from '../../users/dto/user.dto';
-import { Logger } from 'nestjs-pino';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  @Inject()
-  private logger: Logger;
   @Inject()
   private readonly authService: AuthService;
 

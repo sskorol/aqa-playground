@@ -76,8 +76,8 @@ const NewProduct: React.FC = observer(() => {
         error = !value
           ? 'Price is mandatory'
           : isNaN(parseFloat(value))
-          ? 'Price must be a number'
-          : '';
+            ? 'Price must be a number'
+            : '';
         break;
 
       case 'description':
@@ -101,8 +101,8 @@ const NewProduct: React.FC = observer(() => {
         error = !value
           ? 'Quantity is mandatory'
           : isNaN(parseInt(value))
-          ? 'Quantity must be a number'
-          : '';
+            ? 'Quantity must be a number'
+            : '';
         break;
 
       default:
@@ -151,11 +151,11 @@ const NewProduct: React.FC = observer(() => {
   const isFormValid = Object.values(formErrors).every((error) => !error);
 
   return (
-    <div className="new-product-container">
-      <Paper className="new-product-paper">
+    <div className='new-product-container'>
+      <Paper className='new-product-paper'>
         <Grid container spacing={3}>
           <Grid item>
-            <Typography variant="h5">Add New Product</Typography>
+            <Typography variant='h5'>Add New Product</Typography>
           </Grid>
           {fields.map((field) => (
             <Grid item key={field}>
@@ -174,9 +174,9 @@ const NewProduct: React.FC = observer(() => {
           ))}
           <Grid item>
             <Button
-              variant="contained"
-              color="primary"
-              className="new-product-button"
+              variant='contained'
+              color='primary'
+              className='new-product-button'
               disabled={!isFormValid}
               onClick={handleSubmit}
               fullWidth
@@ -186,7 +186,7 @@ const NewProduct: React.FC = observer(() => {
           </Grid>
           <Grid item>
             <Link
-              to="/"
+              to='/'
               style={{
                 marginBottom: '20px',
                 display: 'block',
@@ -202,7 +202,7 @@ const NewProduct: React.FC = observer(() => {
             onClose={() => productStore.clearError()}
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
           >
-            <Alert severity="error">{productStore.error}</Alert>
+            <Alert severity='error'>{productStore.error}</Alert>
           </Snackbar>
           <Snackbar
             anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -210,7 +210,7 @@ const NewProduct: React.FC = observer(() => {
             onClose={() => productStore.setIsCreated(false)}
             autoHideDuration={AUTO_HIDE_DURATION}
           >
-            <Alert severity="success">Product created</Alert>
+            <Alert severity='success'>Product created</Alert>
           </Snackbar>
         </Grid>
       </Paper>

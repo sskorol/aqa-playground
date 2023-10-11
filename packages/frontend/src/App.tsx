@@ -20,11 +20,11 @@ const App: React.FC = observer(() => {
       >
         <Routes>
           <Route
-            path="/"
-            element={isLoggedIn ? <Main /> : <Navigate to="/login" />}
+            path='/'
+            element={isLoggedIn ? <Main /> : <Navigate to='/login' />}
           />
           <Route
-            path="/login"
+            path='/login'
             element={
               <div>
                 <Login />
@@ -32,16 +32,16 @@ const App: React.FC = observer(() => {
             }
           />
           <Route
-            path="/signup"
+            path='/signup'
             element={
               <div>
                 <SignUp />
               </div>
             }
           />
-          <Route path="/new-product" element={<NewProduct />} />
+          <Route path='/new-product' element={<NewProduct />} />
           <Route
-            path="/*"
+            path='/*'
             element={<Navigate to={isLoggedIn ? '/' : '/login'} />}
           />
         </Routes>

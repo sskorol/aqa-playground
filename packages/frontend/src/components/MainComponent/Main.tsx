@@ -23,18 +23,18 @@ type MainHeaderProps = {
 };
 
 const MainHeader: React.FC<MainHeaderProps> = ({
-  setSnackSuccessOpen,
-  setSnackFailedOpen,
-}) => (
-  <Grid container alignItems="center">
+                                                 setSnackSuccessOpen,
+                                                 setSnackFailedOpen,
+                                               }) => (
+  <Grid container alignItems='center'>
     <Grid item lg={1}></Grid>
     <Grid item lg={10}>
-      <Box display="flex" justifyContent="center">
-        <Typography variant="h1">RANDOM STORE</Typography>
+      <Box display='flex' justifyContent='center'>
+        <Typography variant='h1'>RANDOM STORE</Typography>
       </Box>
     </Grid>
     <Grid item lg={1} sx={{ display: 'table' }}>
-      <Box display="flex" justifyContent="flex-end">
+      <Box display='flex' justifyContent='flex-end'>
         <Cart
           setSnackSuccessOpen={setSnackSuccessOpen}
           setSnackFailedOpen={setSnackFailedOpen}
@@ -69,14 +69,14 @@ const Main: React.FC = observer(() => {
   }
 
   return (
-    <div className="main-body">
+    <div className='main-body'>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={snackSuccessOpen}
         autoHideDuration={AUTO_HIDE_DURATION}
         onClose={handleClose}
       >
-        <Alert severity="success">Payment Successful</Alert>
+        <Alert className='alert' severity='success'>Payment Successful</Alert>
       </Snackbar>
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
@@ -84,13 +84,13 @@ const Main: React.FC = observer(() => {
         autoHideDuration={AUTO_HIDE_DURATION}
         onClose={handleClose}
       >
-        <Alert severity="error">Payment Failed</Alert>
+        <Alert className='alert' severity='error'>Payment Failed</Alert>
       </Snackbar>
       <MainHeader
         setSnackSuccessOpen={setSnackSuccessOpen}
         setSnackFailedOpen={setSnackFailedOpen}
       />
-      <Grid container spacing={2} justifyContent="center" alignItems="center">
+      <Grid container spacing={2} justifyContent='center' alignItems='center'>
         <RenderProducts products={products} />
       </Grid>
     </div>
@@ -100,10 +100,10 @@ const Main: React.FC = observer(() => {
 const RenderProducts: React.FC<RenderProductsProps> = ({ products }) => {
   if (products.length === 0) {
     return (
-      <Typography variant="body2" sx={{ justifyContent: 'center' }}>
+      <Typography variant='body2' sx={{ justifyContent: 'center' }}>
         No products available yet.{' '}
         <Link
-          to="/new-product"
+          to='/new-product'
           style={{ color: 'white', textDecoration: 'underline' }}
         >
           Create a new product

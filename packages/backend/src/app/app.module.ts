@@ -54,4 +54,5 @@ import { UsersController } from '../users/users.controller';
     AuthModule,
   ],
 })
-export class AppModule {}
+export class AppModule {
+}

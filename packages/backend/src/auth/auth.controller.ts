@@ -6,7 +6,6 @@ import {
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiInternalServerErrorResponse,
-  ApiOkResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
@@ -35,7 +34,7 @@ export class AuthController {
   }
 
   @Post('login')
-  @ApiOkResponse({ type: LoginStatus })
+  @ApiCreatedResponse({ type: LoginStatus })
   @ApiUnauthorizedResponse({ description: Message.INVALID_CREDENTIALS })
   @ApiOperation({ summary: 'Login with an existing account' })
   public async login(@Body() loginUserDto: LoginUserDto): Promise<LoginStatus> {

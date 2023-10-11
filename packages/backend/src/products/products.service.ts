@@ -5,7 +5,6 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { Logger } from 'nestjs-pino';
-import { ProductDto } from './dto/product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
@@ -20,7 +19,7 @@ export class ProductsService {
   @InjectRepository(Product)
   private readonly productRepository: Repository<Product>;
 
-  public async create(productDto: CreateProductDto): Promise<ProductDto> {
+  public async create(productDto: CreateProductDto): Promise<Product> {
     const productInDb = await this.productRepository.findOne({
       where: { title: productDto.title },
     });
@@ -39,5 +38,9 @@ export class ProductsService {
 
   public async findAll(): Promise<Product[]> {
     return this.productRepository.find();
+  }
+
+  public async deleteAll(): Promise<void> {
+    return this.productRepository.clear();
   }
 }

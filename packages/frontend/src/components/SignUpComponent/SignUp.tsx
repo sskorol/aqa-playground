@@ -108,11 +108,11 @@ export const SignUp: React.FC = observer(() => {
 
   const handleChange =
     (field: keyof SignUpFormData) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      validateField(field, value);
-    };
+      (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setFormData((prev) => ({ ...prev, [field]: value }));
+        validateField(field, value);
+      };
 
   const allFieldsValid = Object.values(formErrors).every((error) => !error);
 
@@ -120,13 +120,13 @@ export const SignUp: React.FC = observer(() => {
     <Grid
       onKeyDown={handleKeyDown}
       container
-      className="signup-container-inner"
+      className='signup-container-inner'
     >
       <Grid item xs={12}>
-        <Paper className="signup-paper">
-          <Grid container direction="column" alignItems="center" spacing={2}>
+        <Paper className='signup-paper'>
+          <Grid container direction='column' alignItems='center' spacing={2}>
             <Grid item>
-              <Typography variant="h5" className="signup-title">
+              <Typography variant='h5' className='signup-title'>
                 Get Started with Us
               </Typography>
             </Grid>
@@ -135,9 +135,9 @@ export const SignUp: React.FC = observer(() => {
                 <TextField
                   inputRef={field.name === 'email' ? emailRef : null}
                   label={field.label}
-                  variant="outlined"
+                  variant='outlined'
                   type={field.type}
-                  className="signup-input"
+                  className='signup-input'
                   onBlur={() =>
                     validateField(
                       field.name as keyof SignUpFormData,
@@ -154,17 +154,17 @@ export const SignUp: React.FC = observer(() => {
             <Grid item>
               <Button
                 disabled={!allFieldsValid}
-                variant="contained"
-                color="primary"
-                className="signup-button"
+                variant='contained'
+                color='primary'
+                className='signup-button'
                 onClick={handleSignup}
               >
                 Sign Up
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="body2">
-                Already have an account? <Link to="/login">Login</Link>
+              <Typography variant='body2'>
+                Already have an account? <Link to='/login'>Login</Link>
               </Typography>
             </Grid>
           </Grid>
@@ -176,7 +176,7 @@ export const SignUp: React.FC = observer(() => {
         onClose={() => authStore.clearError()}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <Alert severity="error">{authStore.error}</Alert>
+        <Alert severity='error'>{authStore.error}</Alert>
       </Snackbar>
     </Grid>
   );

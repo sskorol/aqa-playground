@@ -10,16 +10,16 @@ const CheckoutList: React.FC = observer(() => {
         <ListItem key={item.id}>
           <Grid container>
             <Grid item lg={6} sx={{ textAlign: 'left' }}>
-              <ListItemText primary={item.title} />
+              <ListItemText className='title' primary={item.title} />
             </Grid>
             <Grid item lg={2}>
-              <ListItemText primary={item.quantity} />
+              <ListItemText className='quantity' primary={item.quantity} />
             </Grid>
             <Grid item lg={2}>
-              <ListItemText primary={item.price} />
+              <ListItemText className='price' primary={item.price} />
             </Grid>
             <Grid item lg={2} sx={{ textAlign: 'right' }}>
-              <ListItemText primary={(item.price * item.quantity).toFixed(2)} />
+              <ListItemText className='sum' primary={(item.price * item.quantity).toFixed(2)} />
             </Grid>
           </Grid>
         </ListItem>
@@ -40,7 +40,7 @@ const CheckoutList: React.FC = observer(() => {
           <Grid item lg={2}></Grid>
           <Grid item lg={2}></Grid>
           <Grid item lg={2} sx={{ textAlign: 'right' }}>
-            <ListItemText primary={sum.toFixed(2)} />
+            <ListItemText className='total' primary={sum.toFixed(2)} />
           </Grid>
         </Grid>
       </ListItem>
