@@ -71,12 +71,12 @@ const StripeCheckoutForm: React.FC<StripeCheckoutFormProps> = observer(
     };
 
     return (
-      <form id="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement id="payment-element" onChange={handleCardChange} />
-        <button disabled={shouldBeDisabled} id="submit">
-          <span id="button-text">
+      <form id='payment-form' onSubmit={handleSubmit}>
+        <PaymentElement id='payment-element' onChange={handleCardChange} />
+        <button disabled={shouldBeDisabled} id='submit'>
+          <span id='button-text'>
             {formStatus.isProcessing ? (
-              <div className="spinner" id="spinner"></div>
+              <div className='spinner' id='spinner'></div>
             ) : (
               'Pay now'
             )}

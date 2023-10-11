@@ -48,14 +48,15 @@ const Cart: React.FC<CartProps> = observer(
     };
 
     return (
-      <Grid container alignItems="center" spacing={2}>
+      <Grid container alignItems='center' spacing={2}>
         <Grid item>
-          <Badge badgeContent={cartStore.totalItems()} color="secondary">
+          <Badge badgeContent={cartStore.totalItems()} color='secondary'>
             {cartStore.totalItems() > 0 ? (
               <ShoppingCartIcon
+                className='shoppingCart'
                 onClick={goToCheckout}
-                fontSize="large"
-                color="primary"
+                fontSize='large'
+                color='primary'
                 sx={{
                   cursor: 'pointer',
                   verticalAlign: 'middle',
@@ -64,8 +65,8 @@ const Cart: React.FC<CartProps> = observer(
               />
             ) : (
               <RemoveShoppingCartIcon
-                fontSize="large"
-                color="disabled"
+                fontSize='large'
+                color='disabled'
                 sx={{
                   verticalAlign: 'middle',
                   display: 'table-cell',
@@ -83,7 +84,7 @@ const Cart: React.FC<CartProps> = observer(
         <Grid item>
           <Badge>
             <AddBoxIcon
-              color="primary"
+              color='primary'
               sx={{
                 cursor: 'pointer',
                 verticalAlign: 'middle',
@@ -97,8 +98,8 @@ const Cart: React.FC<CartProps> = observer(
           <Badge>
             <ExitToAppIcon
               onClick={handleLogout}
-              fontSize="large"
-              color="primary"
+              fontSize='large'
+              color='primary'
               sx={{
                 cursor: 'pointer',
                 verticalAlign: 'middle',
@@ -126,12 +127,12 @@ const Checkout: React.FC<CheckoutProps> = observer(
         open={open}
         onClose={handleClose}
         fullWidth={true}
-        maxWidth="sm"
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        maxWidth='sm'
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
       >
         <DialogTitle
-          id="alert-dialog-title"
+          id='alert-dialog-title'
           sx={{
             textAlign: 'center',
             color: 'black',
@@ -173,10 +174,10 @@ const Checkout: React.FC<CheckoutProps> = observer(
           >
             <Link
               href={STRIPE_HELP_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              underline="hover"
-              color="primary"
+              target='_blank'
+              rel='noopener noreferrer'
+              underline='hover'
+              color='primary'
             >
               Need help? See Stripe testing cards.
             </Link>

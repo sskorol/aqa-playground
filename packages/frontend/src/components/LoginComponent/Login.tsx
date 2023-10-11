@@ -127,20 +127,21 @@ export const Login: React.FC = observer(() => {
   return (
     <Grid onKeyDown={handleKeyDown} container>
       <Grid item xs={12}>
-        <Paper className="login-paper">
-          <Grid container direction="column" alignItems="center" spacing={2}>
+        <Paper className='login-paper'>
+          <Grid container direction='column' alignItems='center' spacing={2}>
             <Grid item>
-              <Typography variant="h5" className="login-title">
+              <Typography variant='h5' className='login-title'>
                 Welcome!
               </Typography>
             </Grid>
             {fields.map((field) => (
               <Grid item key={field.name}>
                 <TextField
+                  name={field.name}
                   label={field.label}
-                  variant="outlined"
+                  variant='outlined'
                   type={field.type}
-                  className="login-input"
+                  className='login-input'
                   onBlur={() =>
                     field.validation(
                       field.name as keyof LoginFormData,
@@ -156,18 +157,19 @@ export const Login: React.FC = observer(() => {
             ))}
             <Grid item>
               <Button
+                name='submit'
                 disabled={!isFormValid}
-                variant="contained"
-                color="primary"
-                className="login-button"
+                variant='contained'
+                color='primary'
+                className='login-button'
                 onClick={handleLogin}
               >
                 Login
               </Button>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant="body2">
-                Don't have an account? <Link to="/signup">Sign up</Link>
+              <Typography variant='body2'>
+                Don't have an account? <Link to='/signup'>Sign up</Link>
               </Typography>
             </Grid>
           </Grid>
@@ -179,7 +181,7 @@ export const Login: React.FC = observer(() => {
         onClose={() => authStore.clearError()}
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
       >
-        <Alert severity="error">{authStore.error}</Alert>
+        <Alert severity='error'>{authStore.error}</Alert>
       </Snackbar>
     </Grid>
   );

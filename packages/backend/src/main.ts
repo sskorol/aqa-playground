@@ -35,4 +35,5 @@ async function bootstrap() {
     .useGlobalPipes(new ValidationPipe())
     .listen(configService.get<number>('PORT'));
 }
+
 bootstrap();

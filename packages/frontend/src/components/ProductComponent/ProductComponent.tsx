@@ -20,12 +20,13 @@ type ProductProps = {
 
 const ProductComponent: React.FC<ProductProps> = observer(({ product }) => {
   return (
-    <Card sx={{ height: '600px', width: '80%', margin: 'auto' }}>
+    <Card className='card' sx={{ height: '600px', width: '80%', margin: 'auto' }}>
       <CardHeader
         sx={{
           height: '100px',
           textAlign: 'center',
         }}
+        className='title'
         title={product.title}
       />
       <CardMedia
@@ -34,7 +35,7 @@ const ProductComponent: React.FC<ProductProps> = observer(({ product }) => {
           width: '80%',
           margin: 'auto',
         }}
-        component="img"
+        component='img'
         image={product.image}
         alt={product.title}
       />
@@ -49,18 +50,19 @@ const ProductComponent: React.FC<ProductProps> = observer(({ product }) => {
             height: 'auto',
             margin: 'auto',
           }}
-          variant="body2"
-          color="text.secondary"
+          variant='body2'
+          color='text.secondary'
         >
           {product.description.substring(0, 200)}
         </Typography>
         <Typography
+          className='price'
           sx={{
             height: 'auto',
             textAlign: 'center',
           }}
-          variant="subtitle1"
-          color="text.primary"
+          variant='subtitle1'
+          color='text.primary'
         >
           ${product.price}
         </Typography>
@@ -91,8 +93,9 @@ const RenderCardActions: React.FC<ProductProps> = observer(({ product }) => {
   if (quantity === 0) {
     return (
       <Button
+        className='addToCart'
         sx={{ width: '80%', margin: 'auto' }}
-        variant="contained"
+        variant='contained'
         onClick={addToCart}
       >
         Add to cart
@@ -100,9 +103,9 @@ const RenderCardActions: React.FC<ProductProps> = observer(({ product }) => {
     );
   } else {
     return (
-      <div className="quantity-area">
+      <div className='quantity-area'>
         <Button
-          size="small"
+          size='small'
           sx={{
             height: '100%',
             minWidth: '30%',
@@ -110,13 +113,13 @@ const RenderCardActions: React.FC<ProductProps> = observer(({ product }) => {
             borderRadius: '0px',
             boxShadow: 'none',
           }}
-          variant="contained"
+          variant='contained'
           onClick={incrementQuantityByOne}
         >
           +
         </Button>
         <TextField
-          size="small"
+          size='small'
           sx={{
             height: '100%',
             minWidth: '40%',
@@ -127,7 +130,7 @@ const RenderCardActions: React.FC<ProductProps> = observer(({ product }) => {
           value={quantity}
         />
         <Button
-          size="small"
+          size='small'
           sx={{
             height: '100%',
             minWidth: '30%',
@@ -135,7 +138,7 @@ const RenderCardActions: React.FC<ProductProps> = observer(({ product }) => {
             borderRadius: '0px',
             boxShadow: 'none',
           }}
-          variant="contained"
+          variant='contained'
           onClick={decrementQuantityByOne}
         >
           -

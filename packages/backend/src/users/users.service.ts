@@ -55,9 +55,9 @@ export class UsersService {
   }
 
   public async findByUsername({
-    username,
-    password,
-  }: LoginUserDto): Promise<User> {
+                                username,
+                                password,
+                              }: LoginUserDto): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { username },
     });
