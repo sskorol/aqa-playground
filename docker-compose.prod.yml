@@ -38,7 +38,7 @@ services:
       context: ./packages/backend
     restart: always
     container_name: backend
-    image: sskorol/aqa-be:0.0.1
+    image: sskorol/aqa-be:0.0.2
     ports:
       - "9090:9090"
     env_file:
@@ -49,12 +49,11 @@ services:
   frontend:
     build:
       context: ./packages/frontend
-      args:
-        VITE_REACT_APP_BE_URL: "/api"
-        VITE_REACT_APP_STRIPE_PUB_KEY: ""
+    env_file:
+      - ./packages/frontend/.env.production
     restart: always
     container_name: frontend
-    image: sskorol/aqa-fe:0.0.1
+    image: sskorol/aqa-fe:0.0.2
     ports:
       - "3000:80"
     networks:

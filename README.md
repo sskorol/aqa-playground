@@ -23,9 +23,10 @@
     - [Dev Mode](#dev-mode)
     - [Prod Mode](#prod-mode)
     - [Operating](#operating)
-4. [Tests](#tests)
-5. [Credits](#credits)
-6. [ToDo or Dreams](#todo-or-dreams)
+4. [API](#api)
+5. [Tests](#tests)
+6. [Credits](#credits)
+7. [ToDo or Dreams](#todo-or-dreams)
 
 ### Installation
 
@@ -129,17 +130,15 @@ Regarding Stripe integration: just don't mix up the keys. The secret is always o
 ##### Frontend Config
 
 ```shell
-VITE_REACT_APP_BE_URL=/api
-VITE_REACT_APP_STRIPE_PUB_KEY=YOUR_PUBLICHABLE_STRIPE_KEY
+cd packages/frontend && nano .env.production
 ```
 
-Note that the frontend production environment setup slightly differs from backend.
-By default, you can't pass environment variables to React app in runtime unless you're running a dev server.
-Build process produces static assets that contain hardcoded values picked up from the CLI.
-There are several hacks that allow you to workaround this. But it isn't worth doing it for just 2 env vars.
-So you should either set them up in IDE or pass them to Docker image via CLI / Compose.
+```shell
+VITE_REACT_APP_BE_URL=/api
+VITE_REACT_APP_STRIPE_PUB_KEY=YOUR_PUBLISHABLE_STRIPE_KEY
+```
 
-Also note that frontend uses [Vite](https://vitejs.dev/), allowing you to spawn the dev server in milliseconds.
+Note that frontend uses [Vite](https://vitejs.dev/), allowing you to spawn the dev server in milliseconds.
 But we have to pay for it by following their conventions. Specifically, env vars must have `VITE_` prefix.
 Moreover, you can't use `process.env.VAR_NAME` in the code. Vite uses [import-meta-env](https://iendeavor.github.io/import-meta-env/guide/getting-started/introduction.html)
 which forces us to switch to `import.meta.env.VAR_NAME` syntax.
@@ -147,6 +146,34 @@ which forces us to switch to `import.meta.env.VAR_NAME` syntax.
 It's also worth mentioning that `VITE_REACT_APP_BE_URL` value is different for dev and prod modes.
 In dev mode, you have to provide a full BE URL like `http://localhost:9090`. In prod mode, as we produce static assets,
 a reverse proxy is used on Nginx-level. It maps the BE URL in Docker to `/api`. So env variable should refer to a short path instead.
+
+To be able to inject env vars dynamically into production build while spawning Docker container,
+there was a special hack used:
+```ts
+function getEnvVar(key: string): string {
+  if (window._env_ && window._env_[key]) {
+    return window._env_[key];
+  } else if (import.meta.env[key]) {
+    return import.meta.env[key];
+  }
+  throw new Error(`Environment variable ${key} is not set`);
+}
+```
+
+Here we read env vars from the `window` object while running in Docker, or via `import.meta` while local deployment.
+The actual trick is applied in the `Dockerfile`:
+```dockerfile
+CMD ["/bin/sh", "-c", "echo \"window._env_ = { VITE_REACT_APP_BE_URL: '$VITE_REACT_APP_BE_URL', VITE_REACT_APP_STRIPE_PUB_KEY: '$VITE_REACT_APP_STRIPE_PUB_KEY' }\" > /usr/share/nginx/html/config.js && exec nginx -g 'daemon off;'"]
+```
+
+Here we dynamically generate `config.js` with injected (during Docker container startup) env vars.
+And then copy it into nginx folder with static assets. `index.html` loads this script during the app startup:
+```html
+<script src="/config.js"></script>
+```
+So that we can further access them in code via `getEnvVar` function.
+
+As this config is generated only in Docker, you may still want to mock it within `public` folder to avoid errors regarding missing files. 
 
 [**Go top**](#table-of-contents) :point_up:
 
@@ -179,33 +206,12 @@ It deploys Postgres with PGAdmin, so you can connect to the database from within
 
 #### Full Deployment
 
-To run the entire app in Docker, you have to build FE and BE first. But before doing that, you have to adjust `docker-compose.prod.yml`
-with your Stripe publishable key (see notes about [FE env variables](#environment-variables) and deployment specifics).
-
-```yaml
-  frontend:
-    build:
-      context: ./packages/frontend
-      args:
-        VITE_REACT_APP_BE_URL: "/api"
-        VITE_REACT_APP_STRIPE_PUB_KEY: ""
-    restart: always
-    container_name: frontend
-    image: sskorol/aqa-fe:0.0.1
-    ports:
-      - "3000:80"
-    networks:
-      - aqa
-```
-
-Paste your `VITE_REACT_APP_STRIPE_PUB_KEY`, and you are good to go.
-
-Now you can build the images:
+To run the entire stack in Docker, you have to build FE and BE first:
 ```shell
 docker compose -f docker-compose.prod.yml build
 ```
 
-To run the entire stack, use the following command:
+Then you can run it the following way:
 ```shell
 docker compose -f docker-compose.prod.yml up -d
 ```
@@ -221,7 +227,7 @@ Depending on the previous choice, you'd run DB in Docker, and BE/FE in IDE, or e
 #### Dev Mode
 
 First, ensure you've set everything up, created IDE run/debug configurations with env vars, and started DB containers.
-Note that as it's a multi-module project, you must select a valid `package.json` depending on the sub-module you want to deploy.
+Note that as it's a multi-module project, you must select a valid `package.json` depending on the submodule you want to deploy.
 Also, in case of multiple NodeJS versions, ensure you've selected 16. This project hasn't been tested in the other versions. 
 
 To deploy the backend locally in the watch mode, use `start:dev` script. A similar script should be used on the frontend-side.
@@ -258,6 +264,12 @@ Note that the flow would be the same in the case of the local and containerized 
 
 [**Go top**](#table-of-contents) :point_up:
 
+### API
+
+The following endpoints are currently supported and accessible on `http://localhost:9090`.
+
+![API](https://github.com/sskorol/sskorol/assets/6638780/7973a71f-7e80-4a5d-8a95-398e0b33b7e6)
+
 ### Tests
 
 There are no tests. But that's the point. :smirk:
@@ -285,6 +297,7 @@ Inspired by @jayamaljayamaha, who is the author of the original implementation:
 - [ ] Add Product and User management screens
 - [ ] Add file upload support for images
 - [ ] Revise DTOs, possibly add DAOs
-- [ ] Add dynamic environment variables support to FE
+- [x] Add products deletion endpoint
+- [x] Add dynamic environment variables support to FE
 
 [**Go top**](#table-of-contents) :point_up:
