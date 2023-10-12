@@ -18,4 +18,4 @@ FROM nginx:latest
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh", "-c", "echo \"window._env_ = { VITE_REACT_APP_BE_URL: '$VITE_REACT_APP_BE_URL', VITE_REACT_APP_STRIPE_PUB_KEY: '$VITE_REACT_APP_STRIPE_PUB_KEY' }\" > /usr/share/nginx/html/config.js && exec nginx -g 'daemon off;'"]

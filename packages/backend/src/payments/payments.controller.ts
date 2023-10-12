@@ -12,8 +12,8 @@ import { JwtAuthGuard } from '../auth/guards/jwt.auth.guard';
 import { Route } from '../common/route';
 import { Tag } from '../common/tag';
 
-@Controller(Route.PAYMENTS)
 @ApiBearerAuth()
+@Controller(Route.PAYMENTS)
 @ApiTags(Tag.PAYMENTS)
 export class PaymentsController {
   @Inject()

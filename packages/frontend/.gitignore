@@ -37,3 +37,4 @@ lerna-debug.log*
 # Other
 .env.*
 !.env.production
+public/config.js

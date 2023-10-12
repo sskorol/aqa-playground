@@ -12,6 +12,7 @@ import { RefreshToken } from './entities/refresh.token.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../users/entities/user.entity';
+import { TokensDto } from './dto/tokens.dto';
 
 @Injectable()
 export class AuthService {
@@ -51,7 +52,7 @@ export class AuthService {
     return user;
   }
 
-  private async _createToken(user: User): Promise<any> {
+  private async _createToken(user: User): Promise<TokensDto> {
     const payload = { sub: user.accountId, username: user.username };
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, {
@@ -75,7 +76,7 @@ export class AuthService {
     await this.refreshTokenRepository.save(refreshToken);
   }
 
-  public async refreshAccessToken(refreshToken: string): Promise<any> {
+  public async refreshAccessToken(refreshToken: string): Promise<TokensDto> {
     if (!refreshToken) {
       throw new UnauthorizedException('Refresh token must be provided');
     }
